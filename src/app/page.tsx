@@ -214,7 +214,7 @@ const TelanganaRoadsWebsite = () => {
       <section className="bg-gradient-to-r from-blue-50 to-teal-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-950 mb-6 ">
-            Discover Telangana s
+            Discover Telangana's
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-600"> Road Infrastructure</span>
           </h2>
           <p className="text-xl text-gray-950 mb-8 max-w-3xl mx-auto">
@@ -244,19 +244,20 @@ const TelanganaRoadsWebsite = () => {
             <div className="flex items-center space-x-2">
               <Filter className="w-5 h-5 text-black" />
               <select
-                className="px-4 py-2 border text-blue-600 to-black focus:ring-blue-500"
+                className="px-4 py-2 rounded-lg border text-blue-600 to-black focus:ring-blue-500"
                 value={filterBy}
                 onChange={(e) => setFilterBy(e.target.value)}
               >
+
                 <option value="all">All Roads</option>
                 <option value="high-rating">High Rating (4+)</option>
                 <option value="low-rating">Low Rating (&lt;4)</option>
               </select>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-black">Sort by:</span>
+              <span className=" text-black">Sort by:</span>
               <select
-                className="px-4 py-2 border text-blue-600 to-black focus:ring-blue-500"
+                className="px-4 py-2 border rounded-lg  text-blue-600 to-black focus:ring-blue-500"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
               >
@@ -293,20 +294,20 @@ const TelanganaRoadsWebsite = () => {
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center text-gray-800">
                       <MapPin className="w-4 h-4 mr-2" />
-                      <span className="text-sm">{road.location}</span>
+                      <span className="text-sm text-blue-600">{road.location}</span>
                     </div>
                     <div className="flex items-center text-gray-800">
                       <Building className="w-4 h-4 mr-2" />
-                      <span className="text-sm">{road.contractor}</span>
+                      <span className="text-sm text-blue-600">{road.contractor}</span>
                     </div>
                     <div className="flex items-center text-gray-800">
                       <DollarSign className="w-4 h-4 mr-2" />
-                      <span className="text-sm font-medium">{road.cost}</span>
+                      <span className="text-sm font-medium text-blue-600">{road.cost}</span>
                     </div>
                   </div>
                   
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 text-gray-900">
                       <StarRating rating={Math.round(road.rating)} />
                       <span className="text-sm text-gray-600">
                         {road.rating} ({road.totalRatings} reviews)
@@ -375,15 +376,15 @@ const TelanganaRoadsWebsite = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Road Header */}
         <div className="bg-gradient-to-r from-blue-50 to-teal-50 rounded-2xl p-8 mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">{selectedRoad?.name}</h1>
+          <h1 className="text-3xl font-bold text-gray-900 ">{selectedRoad?.name}</h1>
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
               <MapPin className="w-5 h-5 text-blue-600" />
-              <span className="text-shadow-gray-600">{selectedRoad?.location}</span>
+              <span className="text-gray-900">{selectedRoad?.location}</span>
             </div>
             <div className="flex items-center space-x-2">
               <StarRating rating={Math.round(selectedRoad?.rating || 0)} />
-              <span className="text-shadow-gray-700">
+              <span className="text-gray-900">
                 {selectedRoad?.rating} ({selectedRoad?.totalRatings} reviews)
               </span>
             </div>
@@ -435,7 +436,7 @@ const TelanganaRoadsWebsite = () => {
             <h3 className="text-xl font-semibold text-gray-900 mb-4">Supporting Organization</h3>
             <div className="flex items-center space-x-3">
               <Award className="w-6 h-6 text-blue-600" />
-              <span className="text-lg font-medium">{selectedRoad?.trust}</span>
+              <span className="text-lg font-medium text-blue-600">{selectedRoad?.trust}</span>
             </div>
           </div>
         </div>
@@ -452,17 +453,28 @@ const TelanganaRoadsWebsite = () => {
                 rating={newRating} 
                 interactive={true} 
                 onRate={setNewRating}
+              
               />
+
             </div>
             <div>
-              <label className="block text-shadow-gray-900 mb-2">Comments (Optional):</label>
+              <label className="block text-gray-900 ">Comments (Optional):</label>
               <textarea
-                className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border  text-black border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 rows={3}
                 placeholder="Share your experience with this road..."
                 value={newComment}
+                autoComplete="off"
+                spellCheck="false"
                 onChange={(e) => setNewComment(e.target.value)}
+                maxLength={600}
+                autoFocus
               />
+
+
+
+
+
             </div>
             <button
               onClick={submitRating}
