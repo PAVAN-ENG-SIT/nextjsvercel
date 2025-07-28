@@ -5,6 +5,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
+#first install lucide react in your computer
+npm install lucide-react
+#then 
 npm run dev
 # or
 yarn dev
