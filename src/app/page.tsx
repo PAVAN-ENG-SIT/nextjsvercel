@@ -106,7 +106,9 @@ const TelanganaRoadsWebsite = () => {
   const [filterBy, setFilterBy] = useState('all');
   const [sortBy, setSortBy] = useState('rating');
   const [newRating, setNewRating] = useState(0);
-  const [newComment, setNewComment] = useState('');
+  
+ const [newComment, setNewComment] = useState("") 
+
   const [roads, setRoads] = useState(roadsData);
   const [hoveredStar, setHoveredStar] = useState(0);
 
@@ -226,10 +228,10 @@ const TelanganaRoadsWebsite = () => {
             <div className="relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-950" />
               <input
-                type="text"
-                placeholder="Search roads by name, district, or contractor..." 
-                className="w-full pl-12 pr-4 py-4 text-lg border text-black border-blue-600  rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={searchTerm}
+              type="text"
+              placeholder="Search roads by name, district, or contractor..." 
+              className="w-full pl-12 pr-4 py-4 text-lg border text-left text-black border-blue-600  rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 autoComplete="off"
                 spellCheck="false"
@@ -456,26 +458,25 @@ const TelanganaRoadsWebsite = () => {
               
               />
 
-            </div>
-            <div>
-              <label className="block text-gray-900 ">Comments (Optional):</label>
-              <textarea
-                className="w-full p-3 border  text-black border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                rows={3}
-                placeholder="Share your experience with this road..."
-                value={newComment}
-                autoComplete="off"
-                spellCheck="false"
-                onChange={(e) => setNewComment(e.target.value)}
-                maxLength={600}
-                autoFocus
-              />
+        </div>
+        
+   <div>
+      <div className="border border-gray-200 rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent">
+        <textarea
+          className="w-full p-3 text-black rounded-lg focus:outline-none resize-none"
+          dir="ltr"
+          rows={3}
+          placeholder = "Share your experience with this road..."
+          value={newComment}
+          autoComplete="off"
+          spellCheck="false"
+          onChange={(e) => setNewComment(e.target.value)}
+          maxLength={600}
+          autoFocus
+        />
+      </div>
 
-
-
-
-
-            </div>
+          </div>
             <button
               onClick={submitRating}
               className="px-6 py-3 bg-gradient-to-r from-blue-600 to-teal-600 text-white rounded-lg hover:from-blue-700 hover:to-teal-700 transition-all duration-200 font-medium "
@@ -519,3 +520,85 @@ const TelanganaRoadsWebsite = () => {
 };
 
 export default TelanganaRoadsWebsite; 
+
+
+
+
+type Road = {
+  id: number;
+  rating: number;
+  totalRatings: number;
+  reviews: {
+    user: string;
+    rating: number;
+    comment: string;
+  }[];
+};
+
+const YourComponent = () => {
+  const [newRating, setNewRating] = useState<number>(0);
+  const [newComment, setNewComment] = useState<string>('');
+  const [roads, setRoads] = useState<Road[]>([]);
+  const [selectedRoad, setSelectedRoad] = useState<Road | null>(null);
+
+  const submitRating = () => {
+    if (newRating > 0 && selectedRoad) {
+      const updatedRoads = roads.map((road) => {
+        if (road.id === selectedRoad.id) {
+          const newTotalRatings = road.totalRatings + 1;
+          const newAverageRating =
+            (road.rating * road.totalRatings + newRating) / newTotalRatings;
+          const newReview = {
+            user: 'Anonymous User',
+            rating: newRating,
+            comment: newComment || 'No comment provided',
+          };
+
+          return {
+            ...road,
+            rating: Math.round(newAverageRating * 10) / 10,
+            totalRatings: newTotalRatings,
+            reviews: [...road.reviews, newReview],
+          };
+        }
+        return road;
+      });
+
+      setRoads(updatedRoads);
+      setNewRating(0);
+
+      // ✅ Delay clearing comment to let render complete — prevents cursor jump
+      requestAnimationFrame(() => setNewComment(''));
+
+      alert('Rating submitted successfully!');
+    }
+  };
+
+  return (
+    <div className="w-full max-w-md">
+      <label className="block text-gray-900 mb-2">Comments (Optional):</label>
+      <div className="border border-gray-200 rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent">
+        <textarea
+          className="w-full p-3 text-black rounded-lg focus:outline-none resize-none"
+          dir="ltr"
+          rows={3}
+          placeholder="Share your experience with this road..."
+          value={newComment}
+          autoComplete="off"
+          spellCheck="false"
+          onChange={(e) => setNewComment(e.target.value)}
+          maxLength={600}
+          autoFocus
+        />
+      </div>
+      <button
+        onClick={submitRating}
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        Submit
+      </button>
+    </div>
+  );
+};
+
+export default YourComponent;
